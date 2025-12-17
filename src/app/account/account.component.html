@@ -1,0 +1,64 @@
+<mat-card>
+    <mat-card-header>
+      <div class="fila">
+        <mat-icon>account_circle</mat-icon>
+        <mat-card-title>Mi Cuenta</mat-card-title>
+      </div>
+      <mat-card-subtitle>{{ names }} {{ lastName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-list>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>badge</mat-icon>
+          <h4 mat-line>Tipo de Documento</h4>
+        </div>
+        <p mat-line>{{ typeDocument }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>confirmation_number</mat-icon>
+          <h4 mat-line>Número de Documento</h4>
+        </div>
+        <p mat-line>{{ numberDocument }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>email</mat-icon>
+          <h4 mat-line>Correo</h4>
+        </div>
+        <p mat-line>{{ email }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>phone</mat-icon>
+          <h4 mat-line>Teléfono</h4>
+        </div>
+        <p mat-line>{{ cellPhone }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>attach_money</mat-icon>
+          <h4 mat-line>Salario</h4>
+        </div>
+        <p mat-line>{{ salary }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>manage_accounts</mat-icon>
+          <h4 mat-line>Rol</h4>
+        </div>
+        <p mat-line>{{ sellerRol }}</p>
+      </mat-list-item>
+      <mat-list-item>
+        <div class="fila_info">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <h4 mat-line>Usuario</h4>
+        </div>
+        <p mat-line>{{ sellerUser }}</p>
+      </mat-list-item>
+    </mat-list>
+    <div class="button-container">
+      <button mat-button class="edit-button" (click)="openEditModal()">Editar Perfil</button>
+      <button mat-button class="password-button" (click)="openPasswordDialog()">Cambiar Contraseña</button>
+    </div>
+  </mat-card>

@@ -1,0 +1,97 @@
+mat-card {
+    max-width: 800px;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #d1d1d1; /* Borde gris claro */
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .fila {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        color: #3fb562; /* Color del icono y título */
+    }
+
+    mat-card-header {
+        align-items: center;
+        margin: auto;
+        display: flex;
+        flex-direction: column-reverse;
+        background-color: #000000; /* Fondo del header */
+        color: #ffffff; /* Texto blanco */
+        padding: 20px;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+
+        mat-card-subtitle {
+            color: #ffffff; /* Color del nombre debajo de "Mi Cuenta" */
+        }
+    }
+
+    .fila_info {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        color: #333333; /* Color del texto */
+    }
+
+    mat-icon {
+        color: #2c8146; /* Color del icono en el header */
+    }
+
+    mat-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Dos columnas con anchura mínima de 200px */
+        gap: 10px; /* Espacio entre elementos */
+        margin: 10px;
+    }
+
+    mat-list-item {
+        align-items: flex-start;
+        height: auto;
+        background-color: #f9f9f9; /* Fondo gris claro */
+        border-radius: 8px;
+        padding: 10px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+
+        &:hover {
+            background-color: #e0e0e0; /* Fondo gris más oscuro al pasar el mouse */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    }
+
+    h4 {
+        font-weight: bold;
+        color: #000000; /* Color del título */
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px; /* Alinea los botones a la derecha */
+        margin-right: 20px;
+    }
+
+    .edit-button,
+    .password-button {
+        margin-left: 10px; /* Espacio entre los botones */
+        background-color: #000000; /* Color de fondo */
+        color: white; /* Color del texto */
+        border-radius: 5px; /* Bordes redondeados */
+        padding: 8px 16px; /* Padding */
+        transition: background-color 0.3s; /* Transición suave */
+
+        &:hover {
+            background-color: #333333; /* Color de fondo al pasar el mouse */
+        }
+    }
+}

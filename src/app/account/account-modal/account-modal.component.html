@@ -1,0 +1,100 @@
+<div mat-dialog-content class="Formulario">
+    <h2 mat-dialog-title>{{data ? 'Actualizar Usuario': 'Nuevo Vendedor'}}</h2>
+    <form class="container" [formGroup]="sellerForm">
+        <div class="form-row">
+            <div class="form-column">
+                <!--CAMPO TYPE_DOCUMENT-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Tipo Documento</mat-label>
+                    <mat-select matInput placeholder="Tip. Doc." formControlName="typeDocument">
+                        <mat-option value="DNI">DNI</mat-option>
+                        <mat-option value="CNE">CNE</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form['typeDocument'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO NAMES-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Nombre completo" formControlName="names" type="text"
+                        [errorStateMatcher]="matcher">
+                    <mat-error
+                        *ngIf="form['names'].hasError('firstLetterUpperCase') && !form['names'].hasError('required')">El
+                        nombre debe empezar con mayúscula</mat-error>
+                    <mat-error
+                        *ngIf="form['names'].hasError('invalidName') && !form['names'].hasError('required')">Deben
+                        contener letras y
+                        espacios</mat-error>
+                    <mat-error *ngIf="form['names'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO EMAIL-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Correo Electrónico</mat-label>
+                    <input matInput placeholder="Correo electrónico" formControlName="email" type="email"
+                        [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="form['email'].hasError('email') && !form['email'].hasError('required')">No es un
+                        email válido</mat-error>
+                    <mat-error *ngIf="form['email'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO USER-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput placeholder="usuario" formControlName="sellerUser" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="form['sellerUser'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-column">
+                <!--CAMPO NUMBER_DOCUMENT-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>N° Documento</mat-label>
+                    <input matInput placeholder="xxxxxxxx" formControlName="numberDocument" type="number"
+                        [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="form['numberDocument'].hasError('required')">Este campo es requerido</mat-error>
+                    <mat-error *ngIf="form['numberDocument'].hasError('typeDocumentRequired')">Seleccione un tipo de
+                        documento</mat-error>
+                    <mat-error *ngIf="form['numberDocument'].hasError('invalidDNI')">Inserte 8 dígitos para
+                        DNI</mat-error>
+                    <mat-error *ngIf="form['numberDocument'].hasError('invalidCNE')">Inserte entre 7 y 15 dígitos para
+                        CNE</mat-error>
+                    <mat-error *ngIf="form['numberDocument'].hasError('documentExists')">
+                        El número de documento ya existe
+                    </mat-error>
+                </mat-form-field>
+                <!--CAMPO LAST_NAME-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput placeholder="Apellidos Completos" formControlName="lastName" type="text"
+                        [errorStateMatcher]="matcher">
+                    <mat-error
+                        *ngIf="form['lastName'].hasError('firstLetterUpperCase') && !form['lastName'].hasError('required')">El
+                        apellido debe empezar con mayúscula</mat-error>
+                    <mat-error
+                        *ngIf="form['lastName'].hasError('invalidLastName') && !form['lastName'].hasError('required')">Deben
+                        contener
+                        letras y espacios</mat-error>
+                    <mat-error *ngIf="form['lastName'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO CELL_PHONE-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>N° Telefónico</mat-label>
+                    <input matInput placeholder="000 - 000 - 000" formControlName="cellPhone" type="tel"
+                        [errorStateMatcher]="matcher">
+                    <mat-error
+                        *ngIf="form['cellPhone'].hasError('cellPhoneStartsWithNine') && !form['cellPhone'].hasError('required')">
+                        El número de celular debe comenzar con el dígito 9
+                    </mat-error>
+                    <mat-error
+                        *ngIf="form['cellPhone'].hasError('invalidCellPhone') && !form['cellPhone'].hasError('required')">
+                        El número de celular debe tener 9 dígitos
+                    </mat-error>
+                    <mat-error *ngIf="form['cellPhone'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+    <mat-dialog-actions>
+        <button mat-raised-button cdkFocusInitial color="primary" (click)="saveSeller()">
+            {{data ? 'Actualizar': 'Registrar'}}
+        </button>
+        <button mat-raised-button color="warn" (click)="closeDialog()">Cancelar</button>
+    </mat-dialog-actions>
+</div>

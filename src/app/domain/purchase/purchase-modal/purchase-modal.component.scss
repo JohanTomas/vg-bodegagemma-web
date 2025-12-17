@@ -1,0 +1,110 @@
+.FormularioPurchase {
+    margin: 10px 25px;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: #f5f5f5; /* Fondo blanco suave */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 20px; /* Espaciado interno */
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 22% 74%; /* Dos columnas con proporciones específicas */
+    gap: 20px; /* Espacio entre columnas */
+}
+
+.purchase {
+    display: flex;
+    flex-direction: column; /* Disposición en columna */
+    gap: 15px; /* Espacio entre elementos */
+}
+
+.form-column {
+    padding: 10px 15px; /* Espaciado interno */
+    margin-left: 10px; /* Margen izquierdo */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 8px; /* Bordes redondeados */
+    display: flex;
+    height: 60vh; /* Altura fija */
+    max-height: 60vh; /* Altura máxima */
+    overflow-y: auto; /* Desplazamiento vertical */
+    overflow-x: hidden; /* Sin desplazamiento horizontal */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    background-color: #ffffff; /* Fondo blanco */
+}
+
+.centrado {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Disposición en columna */
+    gap: 15px; /* Espacio entre elementos */
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between; /* Espacio entre elementos */
+    align-items: center; /* Alinear elementos verticalmente */
+    margin-right: 20px; /* Margen derecho */
+}
+
+.button-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinear elementos a la derecha */
+    align-items: flex-end; /* Alinear elementos al fondo */
+    margin-top: auto; /* Margen superior automático */
+}
+
+th,
+td {
+    text-align: center; /* Alinear texto al centro */
+    padding: 8px; /* Espaciado interno */
+}
+
+th {
+    background-color: #07940a; /* Fondo verde medio */
+    color: #000000; /* Texto blanco */
+}
+
+td {
+    background-color: #e8f5e9; /* Fondo verde claro */
+}
+
+button.mat-raised-button {
+    margin-right: 10px; /* Margen derecho */
+}
+
+button.mat-icon-button {
+    margin-left: 10px; /* Margen izquierdo */
+}
+
+.mat-form-field {
+    width: 100%; /* Ancho completo */
+}
+
+.mat-form-field .mat-form-field-outline {
+    border-color: #4caf50; /* Borde verde medio */
+}
+
+.mat-form-field .mat-form-field-label {
+    color: #4caf50; /* Texto verde medio */
+}
+
+.mat-form-field .mat-form-field-underline {
+    background-color: #1c4b1e; /* Subrayado verde medio */
+}
+
+.mat-form-field .mat-form-field-infix {
+    color: #4caf50; /* Texto verde medio */
+}
+
+.mat-form-field .mat-form-field-subscript-wrapper {
+    color: #d32f2f; /* Color de error rojo */
+}
+
+/* Ocultar los botones de incremento/decremento en todos los navegadores */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

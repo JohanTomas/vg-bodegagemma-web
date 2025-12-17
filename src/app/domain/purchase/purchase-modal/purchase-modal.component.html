@@ -1,0 +1,138 @@
+<div mat-dialog-content class="FormularioPurchase">
+    <h2 mat-dialog-title>{{ data && data.id ? 'Actualizar Compra' : 'Nueva Compra' }}</h2>
+    <form class="container" [formGroup]="purchaseForm">
+        <div class="form-row">
+            <div class="purchase">
+                <!-- CAMPO PROVEEDOR -->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <input type="text" placeholder="Buscar Proveedor" matInput formControlName="supplier"
+                        [matAutocomplete]="autoSupplier">
+                    <mat-autocomplete #autoSupplier="matAutocomplete" [displayWith]="displaySupplier">
+                        <mat-option *ngFor="let p of filteredSuppliers" [value]="p">
+                            {{ p.names }} {{ p.lastName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="form['supplier'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!-- CAMPO VENDEDOR -->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <input type="text" placeholder="Buscar Vendedor" matInput formControlName="seller"
+                        [matAutocomplete]="autoSeller">
+                    <mat-autocomplete #autoSeller="matAutocomplete" [displayWith]="displaySeller">
+                        <mat-option *ngFor="let s of filteredSellers" [value]="s">
+                            {{ s.names }} {{ s.lastName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="form['seller'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO METODO DE PAGO-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label *ngIf="purchase.paymentMethod">{{purchase.paymentMethod.name}}</mat-label>
+                    <mat-select matInput placeholder="Metodo de Pago" formControlName="paymentMethod">
+                        <mat-option *ngFor="let p of paymentMethod" [value]="p">{{p.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form['paymentMethod'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!-- Botón de agregar producto -->
+                <button mat-raised-button (click)="addProduct()" type="button"
+                    style="background-color: green; color: #ffffff;">Agregar Producto</button>
+            </div>
+            <!-- Segunda columna -->
+            <div class="form-column purchaseDetail">
+                <div class="centrado">
+
+                    <!-- DETALLES DE LA COMPRA -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Unidad / Kilo</th>
+                                <th>stock</th>
+                                <th>Total</th>
+                                <th>Deshacer</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="purchaseDetails">
+                            <tr *ngFor="let detail of purchaseDetails.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <!-- CAMPO PRODUCTO -->
+                                    <mat-form-field appearance="outline" class="example-form-field">
+                                        <mat-label *ngIf="detail.get('product')?.value">{{
+                                            detail.get('product')!.value.name
+                                            }}</mat-label>
+                                        <input matInput type="text" placeholder="Buscar Producto"
+                                            formControlName="product" [matAutocomplete]="autoProduct">
+                                        <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayProduct">
+                                            <mat-option *ngFor="let p of filteredProducts" [value]="p">
+                                                {{ p.name }}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="detail.get('product')?.hasError('required')">Este campo es
+                                            requerido</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td style="width: 120px;">
+                                    <!-- CAMPO PRECIO -->
+                                    <mat-form-field appearance="outline" class="example-form-field"
+                                        style="width: 100px;">
+                                        <mat-label>Precio</mat-label>
+                                        <input matInput type="number" formControlName="priceUnit"
+                                            (input)="updateTotal(i)" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="detail.get('priceUnit')?.hasError('required')">Rellenar
+                                            campo</mat-error>
+                                        <mat-error
+                                            *ngIf="detail.get('priceUnit')?.hasError('invalidPriceFormat') && !detail.get('priceUnit')?.hasError('required')">
+                                            Precio inválido
+                                        </mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td style="width: 120px;">
+                                    <!-- CAMPO CANTIDAD -->
+                                    <mat-form-field appearance="outline" class="example-form-field"
+                                        style="width: 100px;">
+                                        <mat-label>Cantidad</mat-label>
+                                        <input matInput type="number" formControlName="amount" (input)="updateTotal(i)"
+                                            [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="detail.get('amount')?.hasError('required')">Rellenar
+                                            campo</mat-error>
+                                        <mat-error *ngIf="detail.get('amount')?.hasError('invalidAmount')">Cantidad
+                                            inválida</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td>{{ detail.get('product')?.value?.unitSale }}</td>
+                                <td>{{ detail.get('product')?.value?.stock || 0 }}</td>
+                                <td>S/.{{ calculateItemTotal(detail) }}</td>
+                                <td>
+                                    <button mat-icon-button color="warn" (click)="removeProduct(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- TOTAL -->
+                    <div class="footer">
+                        <p class="p">Total a Pagar: <button mat-flat-button disabled>S/.{{
+                                calculateTotal() }}</button></p>
+                        <button mat-icon-button color="warn" (click)="clearProducts()" style="top: -7px;">
+                            <mat-icon>restore</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Botones de Registrar y Cancelar -->
+    <mat-dialog-actions class="button-actions" style="margin-top: 10px;">
+        <div class="button-wrapper">
+            <button mat-raised-button cdkFocusInitial color="primary" (click)="savepurchase()">
+                {{data && data.id ? 'Actualizar Compra': 'Registrar Compra'}}
+            </button>
+            <button mat-raised-button color="warn" (click)="closeDialog()">Cancelar</button>
+        </div>
+    </mat-dialog-actions>
+</div>

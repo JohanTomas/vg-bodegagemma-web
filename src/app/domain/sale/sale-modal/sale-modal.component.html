@@ -1,0 +1,132 @@
+<div mat-dialog-content class="FormularioSale">
+    <h2 mat-dialog-title>{{ data && data.id ? 'Actualizar Venta' : 'Nueva Venta' }}</h2>
+    <form class="container" [formGroup]="saleForm" (ngSubmit)="saveSale()">
+        <div class="form-row">
+            <div class="sale">
+                <!-- CAMPO CLIENTE -->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <input type="text" placeholder="Buscar Cliente" matInput formControlName="client"
+                        [matAutocomplete]="autoClient">
+                    <mat-autocomplete #autoClient="matAutocomplete" [displayWith]="displayClient">
+                        <mat-option *ngFor="let c of filteredClients" [value]="c">
+                            {{ c.names }} {{ c.lastName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="form['client'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+
+                <!-- CAMPO VENDEDOR -->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <input type="text" placeholder="Buscar Vendedor" matInput formControlName="seller"
+                        [matAutocomplete]="autoSeller">
+                    <mat-autocomplete #autoSeller="matAutocomplete" [displayWith]="displaySeller">
+                        <mat-option *ngFor="let s of filteredSellers" [value]="s">
+                            {{ s.names }} {{ s.lastName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="form['seller'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO METODO DE PAGO-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label *ngIf="sale.paymentMethod">{{sale.paymentMethod.name}}</mat-label>
+                    <mat-select matInput placeholder="Metodo de Pago" formControlName="paymentMethod">
+                        <mat-option *ngFor="let p of paymentMethod" [value]="p">{{p.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form['paymentMethod'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+
+                <!-- Botón de agregar producto -->
+                <button mat-raised-button type="button" (click)="addProduct()"
+                    style="background-color: green; color: #ffffff;">
+                    Agregar Producto
+                </button>
+            </div>
+
+            <!-- Segunda columna -->
+            <div class="form-column saleDetail">
+                <div class="centrado">
+
+                    <!-- DETALLES DE LA VENTA -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Unidad / Kilo</th>
+                                <th>Stock</th>
+                                <th>Total</th>
+                                <th>Deshacer</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="saleDetails">
+                            <tr *ngFor="let detail of saleDetails.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <mat-form-field appearance="outline" class="example-form-field">
+                                        <mat-label *ngIf="detail.get('product')?.value">{{
+                                            detail.get('product')!.value.name
+                                            }}</mat-label>
+                                        <input matInput type="text" placeholder="Buscar Producto"
+                                            formControlName="product" [matAutocomplete]="autoProduct">
+                                        <mat-autocomplete #autoProduct="matAutocomplete" [displayWith]="displayProduct">
+                                            <mat-option *ngFor="let p of filteredProducts" [value]="p">
+                                                {{ p.name }} - {{p.unitSale}}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="detail.get('product')?.hasError('required')">Este campo es
+                                            requerido</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td>S/.{{ detail.get('product')?.value?.priceUnit || 0 }}</td>
+                                <td style="width: 150px;">
+                                    <!-- CAMPO CANTIDAD -->
+                                    <mat-form-field appearance="outline" class="example-form-field"
+                                        style="width: 150px;">
+                                        <mat-label>Cantidad</mat-label>
+                                        <input matInput type="number" formControlName="amount" (input)="updateTotal(i)"
+                                            [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="detail.get('amount')?.hasError('required')">Rellenar
+                                            campo</mat-error>
+                                        <mat-error *ngIf="detail.get('amount')?.hasError('invalidAmount')">Cantidad
+                                            inválida</mat-error>
+                                        <mat-error *ngIf="detail.get('amount')?.hasError('exceededStock')">La cantidad
+                                            excede el stock disponible</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td>{{ detail.get('product')?.value?.unitSale }}</td>
+                                <td>{{ detail.get('product')?.value?.stock || 0 }}</td>
+                                <td>S/.{{ calculateItemTotal(detail) }}</td>
+                                <td>
+                                    <button mat-icon-button color="warn" (click)="removeProduct(i)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- TOTAL -->
+                    <div class="footer">
+                        <p class="p">Total a Pagar: <button mat-flat-button disabled>S/.{{ calculateTotal() }}</button>
+                        </p>
+                        <button mat-icon-button color="warn" (click)="clearProducts()" style="top: -7px;">
+                            <mat-icon>restore</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Registrar y Cancelar -->
+        <mat-dialog-actions class="button-actions" style="margin-top: 10px;">
+            <div class="button-wrapper">
+                <button mat-raised-button cdkFocusInitial color="primary" type="submit">
+                    {{ data && data.id ? 'Actualizar Venta' : 'Registrar Venta' }}
+                </button>
+                <button mat-raised-button color="warn" type="button" (click)="closeDialog()">
+                    Cancelar
+                </button>
+            </div>
+        </mat-dialog-actions>
+    </form>
+</div>

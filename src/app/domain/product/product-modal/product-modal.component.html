@@ -1,0 +1,100 @@
+<div mat-dialog-content class="FormularioProducto">
+    <h2 mat-dialog-title>{{ data && data.id ? 'Actualizar Producto' : 'Nuevo Producto' }}</h2>
+    <form class="container" [formGroup]="productForm">
+        <div class="form-row">
+            <div class="form-column">
+                <!--CAMPO CODIGO-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Código</mat-label>
+                    <input matInput placeholder="Código Pxxx" formControlName="code" type="text"
+                        [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="form['code'].hasError('required')">Este campo es requerido</mat-error>
+                    <mat-error *ngIf="form['code'].hasError('codeExists')">El código ya existe</mat-error>
+                    <mat-error *ngIf="form['code'].hasError('firstLetterNotP')">El código debe comenzar con
+                        'P'</mat-error>
+                    <mat-error *ngIf="form['code'].hasError('invalidLength')">El código debe tener 4
+                        caracteres en total</mat-error>
+                    <mat-error *ngIf="form['code'].hasError('notThreeDigits')">Después de 'P' deben
+                        ser números</mat-error>
+                </mat-form-field>
+
+                <!--CAMPO CATEGORIA-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label *ngIf="product.categoryProduct">{{product.categoryProduct.name}}</mat-label>
+                    <mat-select matInput placeholder="Cat. Produc." formControlName="categoryProduct">
+                        <mat-option *ngFor="let p of categoryProduct" [value]="p">{{p.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form['categoryProduct'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO UNIDAD DE VENTA-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Unidad de Venta</mat-label>
+                    <mat-select matInput placeholder="Unidad de Venta" formControlName="unitSale">
+                        <mat-option value="Unidad">Unidad</mat-option>
+                        <mat-option value="Kilo">Kilo</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form['unitSale'].hasError('required')">Este campo es requerido</mat-error>
+                </mat-form-field>
+                <!--CAMPO FECHA DE EXPIRACION-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Fecha Expiracion</mat-label>
+                    <input matInput type="date" placeholder="Fecha de Vencimiento" formControlName="dateExpiry"
+                        [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="form['dateExpiry'].hasError('futureDate')">Ingresa
+                        un fecha mayor que la fecha actual</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-column">
+                <!--CAMPO NOMBRE-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Nombre del Producto" formControlName="name" type="text"
+                        [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="form['name'].hasError('required')">Este campo es requerido</mat-error>
+                    <mat-error *ngIf="form['name'].hasError('nameExists')">El nombre ya existe</mat-error>
+                    <mat-error *ngIf="form['name'].hasError('firstLetterNotCapital')">
+                        El nombre debe comenzar con mayúscula
+                    </mat-error>
+                </mat-form-field>
+                <!--CAMPO DESCRIPTION-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Descripcion</mat-label>
+                    <textarea matInput placeholder="Descripcion" formControlName="description"
+                        [errorStateMatcher]="matcher"></textarea>
+                </mat-form-field>
+                <!--CAMPO PRECIO UNITARIO-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Precio de Venta</mat-label>
+                    <input matInput type="number" step="0.01" placeholder="Precio de Venta" formControlName="priceUnit"
+                        [errorStateMatcher]="matcher" disableRipple>
+                    <mat-error *ngIf="form['priceUnit'].hasError('required')">Este campo es requerido</mat-error>
+                    <mat-error
+                        *ngIf="form['priceUnit'].hasError('invalidPriceFormat') && !form['priceUnit'].hasError('required')">
+                        Formato de precio inválido
+                    </mat-error>
+                </mat-form-field>
+                <!--CAMPO STOCK-->
+                <mat-form-field appearance="outline" class="example-form-field">
+                    <mat-label>Stock</mat-label>
+                    <input matInput type="number" step="0.01" placeholder="Stock" formControlName="stock"
+                        [errorStateMatcher]="matcher" disableRipple>
+                    <mat-error *ngIf="form['stock'].hasError('required')">Este campo es requerido</mat-error>
+                    <mat-error *ngIf="form['stock'].hasError('unitSaleRequired') && !form['stock'].hasError('required')">Por favor selecciona una unidad de
+                        venta</mat-error>
+                    <mat-error *ngIf="form['stock'].hasError('integerRequired') && !form['stock'].hasError('required')">El stock debe ser un número
+                        entero</mat-error>
+                    <mat-error *ngIf="form['stock'].hasError('invalidDecimalFormat') && !form['stock'].hasError('required')">Formato de stock
+                        inválido</mat-error>
+                </mat-form-field>
+
+
+            </div>
+        </div>
+    </form>
+    <mat-dialog-actions>
+        <button mat-raised-button cdkFocusInitial color="primary" (click)="saveProduct()">
+            {{data && data.id ? 'Actualizar': 'Registrar'}}
+        </button>
+        <button mat-raised-button color="warn" (click)="closeDialog()">Cancelar</button>
+    </mat-dialog-actions>
+</div>

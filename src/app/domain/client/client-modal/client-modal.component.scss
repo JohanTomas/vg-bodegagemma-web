@@ -1,0 +1,27 @@
+.FormularioCliente {
+    width: '700px';
+    margin: 20px 20px 10px 20px;
+}
+
+.form-row {
+    display: flex;
+}
+
+.form-column {
+    flex: 1;
+    padding: 0 10px;
+    /* Ajusta el espaciado entre columnas según sea necesario */
+}
+
+/* Ajusta el estilo de los campos de formulario según sea necesario */
+.example-form-field {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Ocultar los botones de incremento/decremento en todos los navegadores */
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

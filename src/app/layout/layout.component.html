@@ -1,0 +1,85 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async)">
+    <mat-toolbar class="tienda">
+      <mat-icon matListItemIcon>store</mat-icon>
+      Bodega Gemma
+    </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="dashboard" routerLinkActive #homeLink="routerLinkActive"
+        [activated]="homeLink.isActive">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <div matListItemTitle>Inicio</div>
+      </a>
+      <a mat-list-item routerLink="categories" routerLinkActive #categoryLink="routerLinkActive"
+        [activated]="categoryLink.isActive">
+        <mat-icon matListItemIcon>view_list</mat-icon>
+        <div matListItemTitle>Categoría</div>
+      </a>
+      <a mat-list-item routerLink="products" routerLinkActive #productLink="routerLinkActive"
+        [activated]="productLink.isActive">
+        <mat-icon matListItemIcon>inventory</mat-icon>
+        <div matListItemTitle>Productos</div>
+      </a>
+      <a mat-list-item routerLink="clients" routerLinkActive #clientLink="routerLinkActive"
+        [activated]="clientLink.isActive">
+        <mat-icon matListItemIcon>people</mat-icon>
+        <div matListItemTitle>Clientes</div>
+      </a>
+      <ng-container *ngIf="userRole === 'Administrador'">
+        <a mat-list-item routerLink="sellers" routerLinkActive #sellerLink="routerLinkActive"
+          [activated]="sellerLink.isActive">
+          <mat-icon matListItemIcon>supervisor_account</mat-icon>
+          <div matListItemTitle>Vendedores</div>
+        </a>
+      </ng-container>
+      <a mat-list-item routerLink="suppliers" routerLinkActive #supplierLink="routerLinkActive"
+        [activated]="supplierLink.isActive">
+        <mat-icon matListItemIcon>local_shipping</mat-icon>
+        <div matListItemTitle>Proveedores</div>
+      </a>
+      <a mat-list-item routerLink="sales" routerLinkActive #saleLink="routerLinkActive" [activated]="saleLink.isActive">
+        <mat-icon matListItemIcon>shopping_bag</mat-icon>
+        <div matListItemTitle>Ventas</div>
+      </a>
+      <a mat-list-item routerLink="purchases" routerLinkActive #purchaseLink="routerLinkActive"
+        [activated]="purchaseLink.isActive">
+        <mat-icon matListItemIcon>shopping_cart</mat-icon>
+        <div matListItemTitle>Compras</div>
+      </a>
+      <a mat-list-item routerLink="reservations" routerLinkActive #reservationLink="routerLinkActive"
+        [activated]="reservationLink.isActive">
+        <mat-icon matListItemIcon>event_note</mat-icon>
+        <div matListItemTitle>Reservas</div>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="span" style="z-index: 1000;">
+      <button *ngIf="!(isHandset$ | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
+        (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">{{ drawer.opened ? 'arrow_back' : 'menu' }}</mat-icon>
+      </button>
+      <button *ngIf="(isHandset$ | async)" type="button" aria-label="Toggle sidenav" mat-icon-button
+        (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Precios Mas Bajo Siempre</span>
+      <div class="flex justify-end w-full">
+        <img [src]="'https://ui-avatars.com/api/?name=' + (names + '+' + lastName) + '&bold=true'" alt="Avatar"
+          class="rounded-full cursor-pointer h-10 w-10" aria-label="User option menu" [matMenuTriggerFor]="optionMenu">
+        <mat-menu #optionMenu="matMenu">
+          <button mat-menu-item (click)="navigateTo('/account')">
+            <mat-icon>account_circle</mat-icon>
+            <span>Mi cuenta</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Cerrar sesión</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,29 @@
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+  background-color: #f7f3f3; /* Fondo oscuro para el sidenav */
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+  color: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: #105c55; 
+  color: #ffffff; /* Texto blanco */
+}
+.tienda{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+}
+

@@ -1,0 +1,21 @@
+<div class="grid-container">
+  <h2 class="mat-h1 centered-title">DATOS DE LA BODEGA</h2>
+  <mat-grid-list cols="4" rowHeight="160px" gutterSize="16px">
+    @for (card of cards | async; track card) {
+    <mat-grid-tile [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header [style.background-color]="card.color">
+          <mat-card-title>
+            <mat-icon>{{ card.icon }}</mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <h2>{{ card.title }}</h2>
+          <p>Total: {{ card.total }}</p>
+          <p>{{ card.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+    }
+  </mat-grid-list>
+</div>

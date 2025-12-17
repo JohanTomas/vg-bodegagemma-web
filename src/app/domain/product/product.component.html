@@ -1,0 +1,128 @@
+<div class="max-w-7xl mx-auto p2 flex flex-column">
+    <h2 class="margin">Gestion de Productos</h2>
+    <hr>
+    <!-- BUSQUEDA DEL PRODUCTO -->
+    <div class="busqueda">
+        <h3>Busqueda</h3>
+        <div class="busqueda_button">
+            <mat-form-field appearance="outline">
+                <mat-label>Buscar Producto</mat-label>
+                <input matInput (keyup)="filtrar($event)">
+            </mat-form-field>
+        </div>
+    </div>
+    <hr>
+    <div class="flex justify-between items-center client_css">
+        <h3>Lista de Productos</h3>
+        <div class="row">
+            <!-- Menú desplegable -->
+            <button mat-raised-button color="primary" [matMenuTriggerFor]="mainMenu"
+                style="width: 8rem; margin-right: 1rem;">
+                <mat-icon>menu</mat-icon>
+                Opciones
+            </button>
+            <mat-menu #mainMenu="matMenu">
+                <button mat-menu-item (click)="openmodal()">
+                    <mat-icon>add</mat-icon>
+                    Nuevo
+                </button>
+                <button mat-menu-item (click)="getProducts()">
+                    <mat-icon>visibility</mat-icon>
+                    Activos
+                </button>
+                <button mat-menu-item (click)="getProductsInactive()">
+                    <mat-icon>visibility_off</mat-icon>
+                    Inactivos
+                </button>
+                <button mat-menu-item (click)="listStock()">
+                    <mat-icon>inventory</mat-icon>
+                    Stock Bajo
+                </button>
+                <button mat-menu-item (click)="listExpiracion()">
+                    <mat-icon>date_range</mat-icon>
+                    Pronto a Expirar
+                </button>
+            </mat-menu>
+
+            <!-- Botón de exportación existente -->
+            <button mat-raised-button [matMenuTriggerFor]="exportMenu"
+                style="background-color: #5c5c5c; color: #ffffff;">
+                Exportacion
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #exportMenu="matMenu">
+                <button mat-menu-item (click)="exportPDF()">Exportar PDF</button>
+                <button mat-menu-item (click)="exportExcel()">Exportar Excel</button>
+                <button mat-menu-item (click)="exportCSV()">Exportar CSV</button>
+            </mat-menu>
+        </div>
+    </div>
+</div>
+
+<div class="w-full" class="ajustar">
+    <table mat-table [dataSource]="dataSourceP" matSort id="table-data">
+        <!-- Campo codigo -->
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </th>
+            <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+        </ng-container>
+        <!-- Campo name -->
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+        <!-- Campo descipcion -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <!-- Campo category_product_id -->
+        <ng-container matColumnDef="categoryProduct">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Cat. Product </th>
+            <td mat-cell *matCellDef="let element"> {{element.categoryProduct.name}} </td>
+        </ng-container>
+        <!-- Campo price_unit -->
+        <ng-container matColumnDef="priceUnit">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precio </th>
+            <td mat-cell *matCellDef="let element"> S/.{{element.priceUnit}} </td>
+        </ng-container>
+        <!-- Campo unit_sale -->
+        <ng-container matColumnDef="unitSale">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Unidad de Venta </th>
+            <td mat-cell *matCellDef="let element"> {{element.unitSale}} </td>
+        </ng-container>
+        <!-- Campo date_expiry -->
+        <ng-container matColumnDef="dateExpiryFormatted">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fech. Expiración </th>
+            <td mat-cell *matCellDef="let element"> {{element.dateExpiryFormatted}} </td>
+        </ng-container>
+        <!-- Campo stock -->
+        <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Stock </th>
+            <td mat-cell *matCellDef="let element"> {{element.stock}} </td>
+        </ng-container>
+        <!-- Buttons -->
+        <ng-container matColumnDef="editar-eliminar">
+            <th mat-header-cell *matHeaderCellDef style="width: 160px;">Acciones</th>
+            <td mat-cell *matCellDef="let row" style="width: 160px;">
+                <button mat-button color="primary" id="editButton" *ngIf="!showingInactiveProducts"
+                    (click)="openmodal(row)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button color="warn" (click)="eliminar(row.id)" *ngIf="!showingInactiveProducts">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-button color="primary" (click)="activar(row.id)" id="editButton"
+                    *ngIf="showingInactiveProducts">
+                    <mat-icon>restore</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator style="background-color: #FAFAFA;" [length]="100" [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" [length]="cant" (page)="Paginator($event)">
+    </mat-paginator>
+</div>

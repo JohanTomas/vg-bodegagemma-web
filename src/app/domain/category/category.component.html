@@ -1,0 +1,83 @@
+<div class="max-w-7xl mx-auto p2 flex flex-column">
+    <h2 class="margin">Gestion de Categorias</h2>
+    <hr>
+    <!-- BUSQUEDA DE LA CATEGORIA -->
+    <div class="busqueda">
+        <h3>Busqueda</h3>
+        <div class="busqueda_button">
+            <mat-form-field appearance="outline">
+                <mat-label>Buscar Categoria</mat-label>
+                <input matInput (keyup)="filtrar($event)">
+            </mat-form-field>
+        </div>
+    </div>
+    <hr>
+    <!-- BOTONES NUEVO, ACTIVOS E INACTIVOS -->
+    <div class="flex justify-between items-center css">
+        <h3>Lista de Categorias</h3>
+        <div class="row">
+            <button mat-raised-button color="primary" style="width: 8rem; margin-right: 1rem;" (click)="openmodal()">
+                <mat-icon>add</mat-icon>
+                Nuevo
+            </button>
+            <button mat-raised-button color="warn" style="width: 8rem; margin-right: 1rem;"
+                [style.display]="showInactiveButton ? 'inline-block' : 'none'" (click)="toggleButtons()">
+                <mat-icon>power_settings_new</mat-icon>
+                Inactivos
+            </button>
+            <button mat-raised-button
+                style="width: 8rem; margin-right: 1rem; background-color: #298100; color: #ffffff;"
+                [style.display]="showActiveButton ? 'inline-block' : 'none'" (click)="toggleButtons()">
+                <mat-icon>reply_all</mat-icon>
+                Activos
+            </button>
+            <button mat-raised-button [matMenuTriggerFor]="exportMenu"
+                style="background-color: #5c5c5c; color: #ffffff;">
+                Exportacion
+                <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+            <mat-menu #exportMenu="matMenu">
+                <button mat-menu-item (click)="exportPDF()">Exportar PDF</button>
+                <button mat-menu-item (click)="exportExcel()">Exportar Excel</button>
+                <button mat-menu-item (click)="exportCSV()">Exportar CSV</button>
+            </mat-menu>
+        </div>
+    </div>
+
+    <div class="w-full" class="ajustar">
+        <table mat-table [dataSource]="dataSource" matSort id="table-data">
+            <!-- CAMPO NAME -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- CAMPO DESCRIPTION -->
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+            </ng-container>
+
+            <!-- Buttons -->
+            <ng-container matColumnDef="editar-eliminar">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let row">
+                    <button mat-button color="primary" id="editButton" (click)="openmodal(row)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-button color="warn" (click)="eliminar(row.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-button color="primary" (click)="activar(row.id)" id="editButton">
+                        <mat-icon>restore</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator style="background-color: #FAFAFA;" [length]="100" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" [length]="cant" (page)="Paginator($event)">
+        </mat-paginator>
+    </div>
+</div>

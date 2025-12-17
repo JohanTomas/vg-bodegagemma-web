@@ -1,0 +1,28 @@
+<img src="../../assets/IMG/fondo3.jpg" alt="fondo">
+<div class="login-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Iniciar Sesión</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form (ngSubmit)="onLogin()">
+                <div class="input-field">
+                    <mat-label>Usuario</mat-label>
+                    <input matInput [(ngModel)]="username" name="username" required>
+                    <mat-icon class="person_ico">person</mat-icon>
+                </div>
+                <div class="input-field">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput [(ngModel)]="password" name="password" [type]="hidePassword ? 'password' : 'text'"
+                        required>
+                    <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" class="btn_lock"
+                        type="button">
+                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                </div>
+                <button mat-raised-button class="button" type="submit">Login</button>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>

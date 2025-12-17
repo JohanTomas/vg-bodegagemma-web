@@ -1,0 +1,12 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /${spring.application.name}
+spring:
+  application:
+    name: sistventas
+  datasource:
+    url: jdbc:oracle:thin:@bodegagemma_medium?TNS_ADMIN=./Wallet/BodegaGemma
+    username: BodegaGemma
+    password: Valerius2024
+    driver-class-name: oracle.jdbc.OracleDriver

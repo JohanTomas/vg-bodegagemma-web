@@ -1,0 +1,12 @@
+bodegagemma_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=g30dec9f347736a_bodegagemma_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bodegagemma_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=g30dec9f347736a_bodegagemma_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bodegagemma_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=g30dec9f347736a_bodegagemma_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bodegagemma_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=g30dec9f347736a_bodegagemma_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bodegagemma_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.sa-saopaulo-1.oraclecloud.com))(connect_data=(service_name=g30dec9f347736a_bodegagemma_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+

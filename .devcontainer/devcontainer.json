@@ -1,0 +1,12 @@
+{
+    "name": "Spring Boot Dev Environment",
+    "dockerFile": "Dockerfile",
+    "settings": {
+      "java.configuration.updateBuildConfiguration": "automatic"
+    },
+    "extensions": [
+      "vscjava.vscode-java-pack",
+      "pivotal.vscode-spring-boot"
+    ]
+  }
+  
